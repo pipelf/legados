@@ -1,0 +1,23 @@
+{
+  "name": "legados",
+  "version": "1.0.0",
+  "description": "MVP - A lack of vision leads to procrastination and lack of commitment, but achieving goals should be exciting, fun and driven by a mission statement",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipelf/legados.git"
+  },
+  "keywords": [
+    "mission",
+    "goals"
+  ],
+  "author": "Luis Felipe Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pipelf/legados/issues"
+  },
+  "homepage": "https://github.com/pipelf/legados#readme"
+}
