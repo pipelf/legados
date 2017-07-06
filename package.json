@@ -22,19 +22,21 @@
   },
   "homepage": "https://github.com/pipelf/legados#readme",
   "devDependencies": {
-    "firebase": "^4.1.0",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-es2015": "^6.13.2",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
+    "firebase": "^4.1.0",
+    "style-loader": "^0.18.2",
     "vue-loader": "^10.0.0",
     "vue-template-compiler": "^2.1.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"
   },
   "dependencies": {
+    "bootstrap-vue": "^0.18.0",
     "vue": "^2.1.0"
   }
 }
