@@ -1,18 +1,110 @@
 <template>
     <div class="corevalue">
-        <b-form-fieldset
-            description="Enter a Core value for your legacy"
-            label="Enter a Core Value"
+        <b-form-fieldset label="Enter a Core value for your legacy"
             :feedback="feedback" 
             :state="state">
-            
-            <b-form-input :state="state" textarea="true" v-model="newcorevalue" rows=5 ></b-form-input>
+            <b-form-input :state="state" v-model="newcorevalue"></b-form-input>
         </b-form-fieldset>
         
-        <div>{{newcorevalue}}</div>
+        <b-form-fieldset label="Enter a Description for this core value"
+            :feedback="descfeedback">
+            <b-form-input textarea="true" v-model="description" rows="5"></b-form-input>
+        </b-form-fieldset>
         
-        <b-btn size="lg" variant="primary">Add</b-btn>
+        <b-btn size="lg" variant="primary">Save</b-btn>
         
+       <hr />
+        
+        <template v-if="newvalue">
+            <b-card :title="newcorevalue" class="mb-2" show-footer>
+                <div>{{description}}</div>
+                <small slot="footer" class="text-muted">
+                     {{timestamp}}
+                </small>
+            </b-card>
+        </template>
+        
+        <b-card-group columns>
+            <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+             <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+            <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+            <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+                        <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+                        <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+                        <b-card 
+                title="newcorevalue"
+                class="mb-2"
+                show-footer>
+              
+                <div>description</div>
+                 
+                <small slot="footer" class="text-muted">
+                     timestamp
+                </small>
+            </b-card>
+        </b-card-group>
+        
+        <hr />
         <slot></slot>
     </div>
 </template>
@@ -21,14 +113,26 @@
     export default {
         computed: {
             feedback() {
-              return this.newcorevalue.length ? '' : 'Please enter something';
+              return this.newcorevalue.length ? '' : '';
             },
             state() {
               return this.newcorevalue.length ? 'success':'warning';
             },
+            timestamp() {
+                let msg = 'Last updated at ';
+
+                let dt = new Date();
+                let utcDate = dt.toLocaleTimeString();
+                
+                return  this.newcorevalue.length ? msg + dt : '';
+            },
+            newvalue() {
+                return this.newcorevalue.length > 0;
+            }
         },
         data: () => ({
-            newcorevalue: ''
+            newcorevalue: '', 
+            description: ''
         })
     }
 </script>

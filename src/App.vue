@@ -5,18 +5,11 @@
           <span>Legados</span>
         </b-link>
     </b-navbar>
-   
-        
-    <h1>Legacy and Core Values</h1>
-    <create-core-value/>
-    
-    <create-core-value/>
-    <create-core-value/>
-    <create-core-value/>
-    <create-core-value/>
-    <create-core-value/>
-    
-    
+    <br />
+    <div class="container">    
+      <h4>Legacy and Core Values</h4>
+      <create-core-value/>
+    </div>
     
     <div class="footer">
          <legados-nav></legados-nav>
