@@ -13,8 +13,8 @@
         
         <b-btn size="lg" variant="primary">Save</b-btn>
         
-       <hr />
-        
+        <hr />
+    
         <template v-if="newvalue">
             <b-card :title="newcorevalue" class="mb-2" show-footer>
                 <div>{{description}}</div>
@@ -23,89 +23,6 @@
                 </small>
             </b-card>
         </template>
-        
-        <b-card-group columns>
-            <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-             <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-            <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-            <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-                        <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-                        <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-                        <b-card 
-                title="newcorevalue"
-                class="mb-2"
-                show-footer>
-              
-                <div>description</div>
-                 
-                <small slot="footer" class="text-muted">
-                     timestamp
-                </small>
-            </b-card>
-        </b-card-group>
-        
-        <hr />
-        <slot></slot>
     </div>
 </template>
 
