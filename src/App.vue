@@ -1,15 +1,13 @@
 <template>
   <div class="app">
-     <b-navbar sticky type="inverse" variant="inverse">
-        <b-link class="navbar-brand navbar-header text-center" to="#">
-          <span>Legados</span>
-        </b-link>
-    </b-navbar>
-    <br />
+    <md-toolbar>
+      <h1 class="md-title">Legados</h1>
+    </md-toolbar>
+
     
-    <div id="legadosviews" class="container" style="height:100vh;">
+    <main class="main-content" id="legadosviews">
        <div id="corevalues">
-          <h4>Legacy and Core Values</h4>
+          <span class="md-headline">Legacy and Core Values</span>
           <create-core-value/>
           <corevalues></corevalues>
           <corevalues></corevalues>
@@ -33,12 +31,10 @@
           <corevalues></corevalues>
           <corevalues></corevalues>
         </div>
-    </div>
-   
-    
-    <div class="footer">
+        
          <legados-nav></legados-nav>
-    </div>
+    </main>
+   
   </div>
 </template>
 

@@ -1,11 +1,11 @@
 <template>
     <div class="corevalues">
-        <b-card  title="newcorevalue" class="mb-2" show-footer>
-            <div>description</div>
-            <small slot="footer" class="text-muted">
+        <md-whiteframe md-elevation="4">
+             <div>description</div>
+             <small>
                  timestamp
             </small>
-        </b-card>
+        </md-whiteframe>
         <hr />
     </div>
 </template>
