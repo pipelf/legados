@@ -10,29 +10,9 @@
           <span class="md-headline">Legacy and Core Values</span>
           <create-core-value/>
           <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
+
       </div>
-        
-        <div id="okrs">
-           <h4>Objectives and Key Results</h4>
-           <corevalues></corevalues>
-           <corevalues></corevalues>
-           <corevalues></corevalues>
-        </div>
-        
-        <div id="focuson">
-          <h4>Priorities to Focus On</h4>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-          <corevalues></corevalues>
-        </div>
-        
-         <legados-nav></legados-nav>
+     <legados-nav></legados-nav>
     </main>
    
   </div>
