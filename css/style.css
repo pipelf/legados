@@ -1,12 +1,7 @@
-html,
-body,
-.app-viewport {
-  /*height: 100%;*/
-  /*overflow: hidden;*/
+#menu {
+    position: fixed;
+    z-index: 100; 
+    bottom: 0; 
+    left: 0;
+    width: 100%;
 }
-
-
-/*.app-viewport {*/
-/*  display: flex;*/
-/*  flex-flow: column;*/
-/*}*/
