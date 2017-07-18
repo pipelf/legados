@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 import '../css/style.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+// import 'vue-material-home/vue-material.css'
 
 Vue.use(VueRouter)
 Vue.use(VueMaterial)
+Vue.config.productionTip = false
 //http://vuematerial.io/#/
 
 // Vue.use(VueMaterial.MdCore) //Required to boot vue material
