@@ -16,7 +16,6 @@
 </template>
 
 <script>
-
 import LegadosNav from './components/LegadosNav.vue'
 
 export default {

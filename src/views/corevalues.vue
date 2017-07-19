@@ -4,15 +4,19 @@
 
           <md-list class="md-triple-line">
 
-            <md-list-item v-for="(corev, index) in corevalues">
-                <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">filter_{{index + 1}}</md-icon>
-                </md-button>
-            
+            <md-list-item v-for="(corev, index) in corevalues" class="">
+                <!--<md-button class="md-icon-button md-list-action">-->
+                    <md-icon class="md-primary">star</md-icon>
+                <!--</md-button>-->
                 <div class="md-list-text-container">
                     <span>{{corev.title}}</span>
                     <p>{{corev.description}}</p>
                 </div>
+                
+              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue('this', $event)">
+                <!--<input type="hidden" :value="corev.key" name="key"></input>-->
+                <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
+              </md-button>
         
                 <md-divider class="md-inset"></md-divider>
             </md-list-item>
@@ -50,27 +54,20 @@
 
 <script>
 
-var corevaluesitems = [{
-            title: 'Core value 1',
-            description: 'this is a core value'
-        },
-        {
-            title: 'core v 2',
-            description: 'this is a core value'
-        },
-        {
-            title: 'dkfjk',
-            description: 'this is a core value'
-        },
-        {
-            title: 'hello',
-            description: 'this is a core value'
-        },
-        {
-            title: 'hello',
-            description: 'this is a core value'
-        },
-    ];
+import firebase from 'firebase'
+var fireconf = require("../fireconf");
+var fireapp = firebase.initializeApp(fireconf);
+var corevaluesitems = [ ];
+
+var cvs = fireapp.database().ref('corevalues');
+
+cvs.on("child_added", function(data){
+    let corev = data.val();
+    corev.key = data.key;
+    corevaluesitems.push(corev);
+});
+
+
 
 export default {
     methods: {
@@ -81,15 +78,22 @@ export default {
             this.$refs[ref].close();
         },
         createCoreValue(ref) {
-            corevaluesitems.push({
+            let newcorevalue = {
                 title: this.newcore,
                 description: this.newdescription
-            });
+            };
+            
+            let corekey = fireapp.database().ref().child('corevalues').push(newcorevalue);
             
             this.newcore = '';
             this.newdescription = '';
             
             this.$refs[ref].close();
+        },
+        deleteCoreValue (m, event) {
+            let key = event.target.getAttribute('data-key');
+            fireapp.database().ref('corevalues').child(key).remove();
+            event.target.parentNode.parentNode.remove();
         },
         onOpen() {
             console.log('Opened');
