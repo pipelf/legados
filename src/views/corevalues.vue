@@ -67,7 +67,10 @@ cvs.on("child_added", function(data){
     corevaluesitems.push(corev);
 });
 
-
+// cvs.on("child_removed", function(data){
+//     debugger;
+//     corevaluesitems = corevaluesitems.filter((item) => item.key != data.key);
+// });
 
 export default {
     methods: {
@@ -92,8 +95,10 @@ export default {
         },
         deleteCoreValue (m, event) {
             let key = event.target.getAttribute('data-key');
-            fireapp.database().ref('corevalues').child(key).remove();
-            event.target.parentNode.parentNode.remove();
+            fireapp.database().ref('corevalues').child(key).remove().then(function() {
+                //let filtered = this.corevaluesitems.filter((item) => item.key != key);
+                event.target.parentNode.parentNode.remove();
+            });
         },
         onOpen() {
             console.log('Opened');
