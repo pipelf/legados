@@ -1,3 +1,5 @@
 <template>
-    <h1>THIS IS THE OKR VIEW</h1>
+    <md-whiteframe md-elevation="1" class="corevalues phone-viewport">
+        <md-subheader>Objectives and Key Results</md-subheader>
+    </md-whiteframe>
 </template>

@@ -33,7 +33,7 @@ export default {
   position:sticky;
   position: -webkit-sticky;
   top:0;
-  z-index: 200;
+  z-index: 100;
 }
   
 </style>

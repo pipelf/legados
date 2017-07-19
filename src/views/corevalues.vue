@@ -1,34 +1,21 @@
 <template>
-    <div class="corevalues phone-viewport">
-        <h2>Core Values</h2>
-        
+    <md-whiteframe md-elevation="1" class="corevalues phone-viewport">
+         <md-subheader>Core Values</md-subheader>
+
           <md-list class="md-triple-line">
-            <md-list-item class="">
+
+            <md-list-item v-for="(corev, index) in corevalues">
                 <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">filter_1</md-icon>
+                    <md-icon class="md-primary">filter_{{index + 1}}</md-icon>
                 </md-button>
             
                 <div class="md-list-text-container">
-                    <span>This is a core value</span>
-                    <p>I'll be in your neighborhood doing errands...</p>
+                    <span>{{corev.title}}</span>
+                    <p>{{corev.description}}</p>
                 </div>
         
                 <md-divider class="md-inset"></md-divider>
             </md-list-item>
-            
-            <md-list-item class="">
-                <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">filter_2</md-icon>
-                </md-button>
-            
-                <div class="md-list-text-container">
-                    <span>This is a core value</span>
-                    <p>I'll be in your neighborhood doing errands...</p>
-                </div>
-        
-                <md-divider class="md-inset"></md-divider>
-            </md-list-item>
-            
           </md-list>
   
         <md-dialog md-open-from="#fab-add" md-close-to="#fab-add" ref="addcore-dialog">
@@ -38,14 +25,18 @@
             <form>
               <md-input-container>
                 <label>Core Value</label>
-                <md-textarea></md-textarea>
+                <md-input v-model="newcore"></md-input>
+              </md-input-container>
+              <md-input-container>
+                <label>Description</label>
+                <md-textarea v-model="newdescription"></md-textarea>
               </md-input-container>
             </form>
             </md-dialog-content>
             
             <md-dialog-actions>
                 <md-button class="md-primary" @click="closeDialog('addcore-dialog')">Cancel</md-button>
-                <md-button class="md-primary" @click="closeDialog('addcore-dialog')">Create</md-button>
+                <md-button class="md-primary" @click="createCoreValue('addcore-dialog')">Create</md-button>
             </md-dialog-actions>
         </md-dialog>
                 
@@ -54,10 +45,33 @@
                 <md-icon>add</md-icon>
             </md-button>
         </md-bottom-bar>
-    </div>
+    </md-whiteframe>
 </template>
 
 <script>
+
+var corevaluesitems = [{
+            title: 'Core value 1',
+            description: 'this is a core value'
+        },
+        {
+            title: 'core v 2',
+            description: 'this is a core value'
+        },
+        {
+            title: 'dkfjk',
+            description: 'this is a core value'
+        },
+        {
+            title: 'hello',
+            description: 'this is a core value'
+        },
+        {
+            title: 'hello',
+            description: 'this is a core value'
+        },
+    ];
+
 export default {
     methods: {
         openDialog(ref) {
@@ -66,13 +80,29 @@ export default {
         closeDialog(ref) {
             this.$refs[ref].close();
         },
+        createCoreValue(ref) {
+            corevaluesitems.push({
+                title: this.newcore,
+                description: this.newdescription
+            });
+            
+            this.newcore = '';
+            this.newdescription = '';
+            
+            this.$refs[ref].close();
+        },
         onOpen() {
             console.log('Opened');
         },
         onClose(type) {
             console.log('Closed', type);
         }
-    }
+    },
+    data : () => ({
+        corevalues : corevaluesitems,
+        newcore : '',
+        newdescription : ''
+    })
 };
 </script>
 
@@ -88,6 +118,11 @@ export default {
     bottom: 0; 
     left: 0;
     width: 100%;
+}
+
+.corevalues {
+    margin-bottom:50px;
+    padding: 10px;
 }
 
 </style>
