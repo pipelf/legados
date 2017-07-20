@@ -43,7 +43,6 @@ const router = new VueRouter({
     }]
 });
 
-// Start the app
 new Vue({
   router,
   el: '#app',

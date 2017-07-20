@@ -1,5 +1,5 @@
 <template>
-    <md-whiteframe md-elevation="1" class="corevalues phone-viewport">
+    <md-whiteframe md-elevation="0" class="corevalues phone-viewport">
          <md-subheader>Core Values</md-subheader>
 
           <md-list class="md-triple-line">
@@ -18,7 +18,7 @@
                 <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
               </md-button>
         
-                <md-divider class="md-inset"></md-divider>
+                <md-divider></md-divider>
             </md-list-item>
           </md-list>
   
