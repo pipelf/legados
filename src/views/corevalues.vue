@@ -1,27 +1,25 @@
 <template>
-    <md-whiteframe md-elevation="0" class="corevalues phone-viewport">
+    <div class="corevalues phone-viewport">
          <md-subheader>Core Values</md-subheader>
+          <md-divider></md-divider>
 
           <md-list class="md-triple-line">
 
             <md-list-item v-for="(corev, index) in corevalues" class="">
-                <!--<md-button class="md-icon-button md-list-action">-->
-                    <md-icon class="md-primary">star</md-icon>
-                <!--</md-button>-->
                 <div class="md-list-text-container">
                     <span>{{corev.title}}</span>
                     <p>{{corev.description}}</p>
                 </div>
                 
               <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue('this', $event)">
-                <!--<input type="hidden" :value="corev.key" name="key"></input>-->
+                <input type="hidden" :value="corev.key" name="key"></input>
                 <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
               </md-button>
         
                 <md-divider></md-divider>
             </md-list-item>
           </md-list>
-  
+        
         <md-dialog md-open-from="#fab-add" md-close-to="#fab-add" ref="addcore-dialog">
             <md-dialog-title>Create new Core Value</md-dialog-title>
             
@@ -49,7 +47,7 @@
                 <md-icon>add</md-icon>
             </md-button>
         </md-bottom-bar>
-    </md-whiteframe>
+    </div>
 </template>
 
 <script>
@@ -59,13 +57,14 @@ var fireconf = require("../fireconf");
 var fireapp = firebase.initializeApp(fireconf);
 var corevaluesitems = [ ];
 
-var cvs = fireapp.database().ref('corevalues');
-
-cvs.on("child_added", function(data){
+var cvsref = fireapp.database().ref('corevalues');
+cvsref.on("child_added", function(data){
     let corev = data.val();
     corev.key = data.key;
     corevaluesitems.push(corev);
 });
+
+//Use Vuefire
 
 // cvs.on("child_removed", function(data){
 //     debugger;
@@ -73,6 +72,9 @@ cvs.on("child_added", function(data){
 // });
 
 export default {
+    created () {
+
+    },
     methods: {
         openDialog(ref) {
             this.$refs[ref].open();

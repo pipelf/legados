@@ -1,6 +1,7 @@
 <template>
-    <md-whiteframe md-elevation="0" class="content phone-viewport">
+    <div class="content phone-viewport">
         <md-subheader>Objectives and Key Results</md-subheader>
+        <md-divider></md-divider>
         
         <md-list>
             <md-list-item class="okrlistitem" v-for="(objective, index) in objectives">
@@ -33,8 +34,9 @@
                         </md-list-item>
                     </md-list>
                 </md-list-expand>
-                <md-button class="md-icon-button md-list-action">
-                    <md-icon class="md-primary">delete</md-icon>
+  
+                <md-button class="md-icon-button md-list-action" v-on:click="deleteObjective('this', $event)">
+                    <md-icon class="md-primary" :data-key="objective.key">delete</md-icon>
                 </md-button>
                 <md-divider></md-divider>
             </md-list-item>
@@ -47,11 +49,8 @@
             <form>
                 <md-input-container>
                     <label for="corevalue">Core Value</label>
-                    <md-select name="corevlaue">
-                          <md-option value="volvo">Volvo</md-option>
-                          <md-option value="saab">Saab</md-option>
-                          <md-option value="mercedes">Mercedes</md-option>
-                          <md-option value="audi">Audi</md-option>
+                    <md-select name="corevlaue" v-model="corevaluekey">
+                          <md-option v-for="option in corevalueoptions" v-bind:value="option.key">{{ option.title }}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container>
@@ -72,70 +71,51 @@
                 <md-icon>add</md-icon>
             </md-button>
         </md-bottom-bar>
-    </md-whiteframe>
+    </div>
 </template>
 
 <script>
 
-// import firebase from 'firebase'
-// var fireconf = require("../fireconf");
-// var fireapp = firebase.initializeApp(fireconf);
+import firebase from 'firebase'
+var fireconf = require("../fireconf");
+var fireapp = firebase.app();
 
 var objectivesdata = [
-        {
-            name : 'Some objective',
-            corevalue : 'a core value',
-            keyresults : [
-                { name: 'This is a long key result which could be common', duedate: '7/20/2017'},
-                { name: 'key result 2', duedate: '7/20/2017'},
-                { name: 'key result 3', duedate: 'None'},
-            ]
-        },
-        {
-            name : 'Some objective',
-            corevalue : 'a core value',
-            keyresults : [
-                { name: 'key result 1', duedate: '7/20/2017'},
-                { name: 'key result 2', duedate: '7/20/2017'},
-                { name: 'key result 3', duedate: 'None'},
-            ]
-        },
-        {
-            name : 'Some objective',
-            corevalue : 'a core value',
-            keyresults : [
-                { name: 'key result 1', duedate: '7/20/2017'},
-                { name: 'key result 2', duedate: '7/20/2017'},
-                { name: 'key result 3', duedate: 'None'},
-            ]
-        },
-        {
-            name : 'Some objective',
-            corevalue : 'a core value',
-            keyresults : [
-                { name: 'key result 1', duedate: '7/20/2017'},
-                { name: 'key result 2', duedate: '7/20/2017'},
-                { name: 'key result 3', duedate: 'None'},
-            ]
-        },
-        {
-            name : 'Some objective',
-            corevalue : 'a core value',
-            keyresults : [
-                { name: 'key result 1', duedate: '7/20/2017'},
-                { name: 'key result 2', duedate: '7/20/2017'},
-                { name: 'key result 3', duedate: 'None'},
-            ]
-        }
+        // {
+        //     name : 'Some objective',
+        //     corevaluekey : '-ksdkjddjkld',
+        //     corevalue : 'a core value',
+        //     keyresults : [
+        //         { name: 'This is a long key result which could be common', duedate: '7/20/2017'},
+        //         { name: 'key result 2', duedate: '7/20/2017'},
+        //         { name: 'key result 3', duedate: 'None'},
+        //     ]
+        // }
     ];
 
-// var cvs = fireapp.database().ref('corevalues');
+var objs = fireapp.database().ref('objectives').orderByChild('corevaluekey');
 
-// cvs.on("child_added", function(data){
-//     let corev = data.val();
-//     corev.key = data.key;
-//     corevaluesitems.push(corev);
-// });
+objs.on("child_added", function(data){
+    let obj = data.val();
+    obj.key = data.key;
+    
+    let cv = fireapp.database().ref('corevalues/' + obj.corevaluekey).once('value').then(function(snapshot) {
+      obj.corevalue = snapshot.val().title;
+    }).then(function () {
+        objectivesdata.push(obj);
+    });
+});
+
+
+var corevaluesdata = [];
+
+var cvs = fireapp.database().ref('corevalues');
+
+cvs.on("child_added", function(data){
+    let corev = data.val();
+    corev.key = data.key;
+    corevaluesdata.push(corev);
+});
 
 export default {
     methods: {
@@ -147,22 +127,23 @@ export default {
         },
         createObjective(ref) {
             let newobjective = {
-                objective: this.newobjective
+                name: this.newobjective,
+                corevaluekey: this.corevaluekey
             };
             
-            //let corekey = fireapp.database().ref().child('objectives').push(newobjective);
+            let newobject = fireapp.database().ref().child('objectives').push(newobjective);
             
             this.newobjective = '';
+            this.corevaluekey = '';
             
             this.$refs[ref].close();
         },
-        // deleteCoreValue (m, event) {
-        //     let key = event.target.getAttribute('data-key');
-        //     fireapp.database().ref('corevalues').child(key).remove().then(function() {
-        //         //let filtered = this.corevaluesitems.filter((item) => item.key != key);
-        //         event.target.parentNode.parentNode.remove();
-        //     });
-        // },
+        deleteObjective (m, event) {
+            let key = event.target.getAttribute('data-key');
+            fireapp.database().ref('objectives').child(key).remove().then(function() {
+                event.target.parentNode.parentNode.parentNode.remove();
+            });
+        },
         onOpen() {
             console.log('Opened');
         },
@@ -172,6 +153,8 @@ export default {
     },
     data : () => ({
         objectives : objectivesdata,
+        corevalueoptions : corevaluesdata,
+        corevaluekey : '',
         newobjective : ''
     })
 };
