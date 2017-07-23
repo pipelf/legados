@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueFire from 'vuefire'
+
 import '../css/style.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
 Vue.use(VueRouter)
+Vue.use(VueFire)
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
 //http://vuematerial.io/#/

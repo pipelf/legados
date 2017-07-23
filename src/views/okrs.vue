@@ -4,7 +4,7 @@
         <md-divider></md-divider>
         
         <md-list>
-            <md-list-item class="okrlistitem" v-for="(objective, index) in objectives">
+            <md-list-item class="okrlistitem" v-for="(objective, index) in objectives" :ref="objective.key">
                 <div class="md-list-text-container">
                     <span class="md-body-2">{{objective.name}}</span>
                     <span class="md-caption">{{objective.corevalue}}</span>
@@ -35,7 +35,7 @@
                     </md-list>
                 </md-list-expand>
   
-                <md-button class="md-icon-button md-list-action" v-on:click="deleteObjective('this', $event)">
+                <md-button class="md-icon-button md-list-action" v-on:click="deleteObjective(objective.key, objective.corevaluekey)">
                     <md-icon class="md-primary" :data-key="objective.key">delete</md-icon>
                 </md-button>
                 <md-divider></md-divider>
@@ -80,46 +80,45 @@ import firebase from 'firebase'
 var fireconf = require("../fireconf");
 var fireapp = firebase.app();
 
-var objectivesdata = [
-        // {
-        //     name : 'Some objective',
-        //     corevaluekey : '-ksdkjddjkld',
-        //     corevalue : 'a core value',
-        //     keyresults : [
-        //         { name: 'This is a long key result which could be common', duedate: '7/20/2017'},
-        //         { name: 'key result 2', duedate: '7/20/2017'},
-        //         { name: 'key result 3', duedate: 'None'},
-        //     ]
-        // }
-    ];
+var objectivesdata = {};
 
-var objs = fireapp.database().ref('objectives').orderByChild('corevaluekey');
+var corevref = fireapp.database().ref('corevalues').orderByChild('objectives');
 
-objs.on("child_added", function(data){
-    let obj = data.val();
-    obj.key = data.key;
+var processobjectives = function(data) {
+    let corevalue = data.val().title;
+    let corevaluekey = data.key;
     
-    let cv = fireapp.database().ref('corevalues/' + obj.corevaluekey).once('value').then(function(snapshot) {
-      obj.corevalue = snapshot.val().title;
-    }).then(function () {
-        objectivesdata.push(obj);
-    });
-});
+    for(var key in data.val().objectives) {
+        if(objectivesdata[key]) { continue; }
+        
+        let obj =  data.val().objectives[key];
+        obj.key = key;
+        obj.corevalue = corevalue;
+        obj.corevaluekey = corevaluekey;
+        objectivesdata[key] = obj;
+    }
+};
 
+corevref.on("child_added", processobjectives);
+corevref.on("child_changed", processobjectives);
 
-var corevaluesdata = [];
+var corevalueoptions = {};
 
 var cvs = fireapp.database().ref('corevalues');
 
-cvs.on("child_added", function(data){
-    let corev = data.val();
-    corev.key = data.key;
-    corevaluesdata.push(corev);
+cvs.once("value").then(function(data){
+    let corevalues = data.val();
+    for(var key in corevalues) {
+        corevalueoptions[key] = corevalues[key];
+    }
 });
 
 export default {
     methods: {
         openDialog(ref) {
+            let vm = this;
+
+            
             this.$refs[ref].open();
         },
         closeDialog(ref) {
@@ -128,20 +127,21 @@ export default {
         createObjective(ref) {
             let newobjective = {
                 name: this.newobjective,
-                corevaluekey: this.corevaluekey
             };
             
-            let newobject = fireapp.database().ref().child('objectives').push(newobjective);
+            fireapp.database().ref().child('corevalues/'+this.corevaluekey+'/objectives').push(newobjective);
             
             this.newobjective = '';
             this.corevaluekey = '';
             
             this.$refs[ref].close();
         },
-        deleteObjective (m, event) {
-            let key = event.target.getAttribute('data-key');
-            fireapp.database().ref('objectives').child(key).remove().then(function() {
-                event.target.parentNode.parentNode.parentNode.remove();
+        deleteObjective (key, corevkey) {
+            
+            let vm = this;
+            fireapp.database().ref('corevalues/'+corevkey+'/objectives').child(key).remove().then(function() {
+                delete vm.objectives[key];
+                vm.$refs[key][0].$el.remove()
             });
         },
         onOpen() {
@@ -153,7 +153,7 @@ export default {
     },
     data : () => ({
         objectives : objectivesdata,
-        corevalueoptions : corevaluesdata,
+        corevalueoptions : corevalueoptions,
         corevaluekey : '',
         newobjective : ''
     })

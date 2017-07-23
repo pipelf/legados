@@ -5,13 +5,13 @@
 
           <md-list class="md-triple-line">
 
-            <md-list-item v-for="(corev, index) in corevalues" class="">
+            <md-list-item v-for="(corev, index) in corevalues" :ref="corev.key">
                 <div class="md-list-text-container">
                     <span>{{corev.title}}</span>
                     <p>{{corev.description}}</p>
                 </div>
                 
-              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue('this', $event)">
+              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue(corev.key)">
                 <input type="hidden" :value="corev.key" name="key"></input>
                 <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
               </md-button>
@@ -55,26 +55,25 @@
 import firebase from 'firebase'
 var fireconf = require("../fireconf");
 var fireapp = firebase.initializeApp(fireconf);
-var corevaluesitems = [ ];
+var corevaluesitems = {};
 
 var cvsref = fireapp.database().ref('corevalues');
+
 cvsref.on("child_added", function(data){
     let corev = data.val();
     corev.key = data.key;
-    corevaluesitems.push(corev);
+    corevaluesitems[corev.key] = corev;
 });
-
-//Use Vuefire
-
-// cvs.on("child_removed", function(data){
-//     debugger;
-//     corevaluesitems = corevaluesitems.filter((item) => item.key != data.key);
-// });
 
 export default {
     created () {
 
     },
+    data : () => ({
+            corevalues : corevaluesitems,
+            newcore : '',
+            newdescription : ''
+    }),
     methods: {
         openDialog(ref) {
             this.$refs[ref].open();
@@ -95,11 +94,11 @@ export default {
             
             this.$refs[ref].close();
         },
-        deleteCoreValue (m, event) {
-            let key = event.target.getAttribute('data-key');
-            fireapp.database().ref('corevalues').child(key).remove().then(function() {
-                //let filtered = this.corevaluesitems.filter((item) => item.key != key);
-                event.target.parentNode.parentNode.remove();
+        deleteCoreValue (key) {
+            let vm = this;
+            fireapp.database().ref('corevalues').child(key).remove().then(function(data) {
+                delete vm.corevalues[key];
+                vm.$refs[key][0].$el.remove()
             });
         },
         onOpen() {
@@ -108,13 +107,12 @@ export default {
         onClose(type) {
             console.log('Closed', type);
         }
-    },
-    data : () => ({
-        corevalues : corevaluesitems,
-        newcore : '',
-        newdescription : ''
-    })
+    }
+    // firebase: {
+    //     corevalues :  cvsref
+    // }
 };
+
 </script>
 
 <style>
