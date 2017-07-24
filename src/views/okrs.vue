@@ -102,14 +102,17 @@ var processobjectives = function(data) {
 corevref.on("child_added", processobjectives);
 corevref.on("child_changed", processobjectives);
 
-var corevalueoptions = {};
+var corevalueoptions = [];
 
 var cvs = fireapp.database().ref('corevalues');
 
 cvs.once("value").then(function(data){
     let corevalues = data.val();
+    
     for(var key in corevalues) {
-        corevalueoptions[key] = corevalues[key];
+        let corev = corevalues[key];
+        corev.key = key;
+        corevalueoptions.push(corev);
     }
 });
 
