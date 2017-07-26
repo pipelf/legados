@@ -16,6 +16,10 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+var fireconf = require("./fireconf");
+firebase.initializeApp(fireconf);
+
 import LegadosNav from './components/LegadosNav.vue'
 
 export default {

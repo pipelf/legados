@@ -13,11 +13,6 @@ Vue.config.productionTip = false
 //http://vuematerial.io/#/
 
 import App from './App.vue'
-// import firebase from 'firebase'
-// var fireconf = require("./fireconf");
-// var fireapp = firebase.initializeApp(fireconf);
-
-
 import Home from './views/home.vue';
 import CoreValues from './views/corevalues.vue';
 import Okrs from './views/okrs.vue';
@@ -51,3 +46,7 @@ new Vue({
   el: '#app',
   render: h => h(App)
 })
+
+import firebase from 'firebase'
+var fireconf = require("./fireconf");
+firebase.initializeApp(fireconf);
