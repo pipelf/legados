@@ -46,7 +46,3 @@ new Vue({
   el: '#app',
   render: h => h(App)
 })
-
-import firebase from 'firebase'
-var fireconf = require("./fireconf");
-firebase.initializeApp(fireconf);

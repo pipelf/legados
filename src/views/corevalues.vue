@@ -5,13 +5,13 @@
 
           <md-list class="md-triple-line">
 
-            <md-list-item v-for="(corev, key) in corevalues" :ref="key">
+            <md-list-item v-for="corev in corevalues" :ref="corev['.key']">
                 <div class="md-list-text-container">
                     <span>{{corev.title}}</span>
                     <p>{{corev.description}}</p>
                 </div>
                 
-              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue(key)">
+              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue(corev['.key'])">
                 <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
               </md-button>
         
