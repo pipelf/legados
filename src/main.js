@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 
-import '../css/style.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 
@@ -18,7 +17,7 @@ import CoreValues from './views/corevalues.vue';
 import Okrs from './views/okrs.vue';
 import FocusOn from './views/focuson.vue';
 
-const router = new VueRouter({
+var router = new VueRouter({
     routes: [{
         path: '/',
         name: 'home',
@@ -42,7 +41,7 @@ const router = new VueRouter({
 });
 
 new Vue({
-  router,
-  el: '#app',
-  render: h => h(App)
+    router,
+    el: '#app',
+    render: h => h(App)
 })

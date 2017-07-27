@@ -83,7 +83,7 @@ export default {
             this.$refs[ref].close();
         },
         createCoreValue(ref) {
-            let newcorevalue = {
+            var newcorevalue = {
                 title: this.newcore,
                 description: this.newdescription
             };

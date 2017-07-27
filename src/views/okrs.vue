@@ -25,6 +25,12 @@
                                   </md-button>
                                 
                                   <md-menu-content>
+                                      
+                                    <md-menu-item>
+                                      <md-icon>calendar</md-icon>
+                                      <span>Set Due Date</span>
+                                    </md-menu-item>
+                                    
                                     <md-menu-item>
                                       <md-icon>pageview</md-icon>
                                       <span>view</span>
@@ -130,7 +136,7 @@ export default {
             this.$refs[ref].close();
         },
         createObjective(ref) {
-            let newobjective = {
+            var newobjective = {
                 name: this.newobjective,
             };
             
@@ -145,7 +151,7 @@ export default {
             this.$firebaseRefs.corevalues.child(corevkey).child('objectives').child(key).remove();
         },
         addKeyResult (corevkey, objkey) {
-            let keyresult = { name : this.newkeyresult };
+            var keyresult = { name : this.newkeyresult };
             
             this.$firebaseRefs.corevalues.child(corevkey)
                 .child('objectives').child(objkey).child('keyresults').push(keyresult);
