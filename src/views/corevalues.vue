@@ -11,9 +11,29 @@
                     <p>{{corev.description}}</p>
                 </div>
                 
-              <md-button class="md-icon-button md-list-action" v-on:click="deleteCoreValue(corev['.key'])">
-                <md-icon class="md-primary" :data-key="corev.key">delete</md-icon>
-              </md-button>
+                <md-menu>
+                  <md-button class="md-icon-button" md-menu-trigger>
+                    <md-icon>more_vert</md-icon>
+                  </md-button>
+                
+                  <md-menu-content>
+                      
+                    <md-menu-item>
+                      <md-icon>pageview</md-icon>
+                      <span>view</span>
+                    </md-menu-item>
+                
+                    <md-menu-item>
+                      <md-icon>edit</md-icon>
+                      <span>Edit</span>
+                    </md-menu-item>
+                    
+                    <md-menu-item v-on:click="deleteCoreValue(corev['.key'])">
+                      <md-icon>delete</md-icon>
+                      <span>Delete</span>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
         
                 <md-divider></md-divider>
             </md-list-item>

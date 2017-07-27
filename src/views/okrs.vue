@@ -13,33 +13,73 @@
                     <span></span>
                     <md-list-expand>
                          <md-list>
-                            <md-list-item class="key-result" v-for="keyresult in objective.keyresults">
+                            <md-list-item class="key-result" v-for="(keyresult, keyresultkey) in objective.keyresults">
                                 <div class="md-list-text-container">
                                     <span>{{keyresult.name}}</span>
                                     <span class="md-caption">{{keyresult.duedate}}</span>
                                 </div>
-    
-                                <md-button class="md-icon-button md-list-action">
-                                    <md-icon class="md-primary">more_vert</md-icon>
-                                </md-button>
+                                
+                                <md-menu>
+                                  <md-button class="md-icon-button" md-menu-trigger>
+                                    <md-icon>more_vert</md-icon>
+                                  </md-button>
+                                
+                                  <md-menu-content>
+                                    <md-menu-item>
+                                      <md-icon>pageview</md-icon>
+                                      <span>view</span>
+                                    </md-menu-item>
+                                
+                                    <md-menu-item>
+                                      <md-icon>edit</md-icon>
+                                      <span>Edit</span>
+                                    </md-menu-item>
+                                    
+                                    <md-menu-item v-on:click="deleteKeyResult(objkey, corevalue['.key'], keyresultkey)">
+                                      <md-icon>delete</md-icon>
+                                      <span>Delete</span>
+                                    </md-menu-item>
+                                  </md-menu-content>
+                                </md-menu>
              
                             </md-list-item>
                         
                             <md-list-item class="key-result">
                                 <md-input-container>
-                                    <md-input placeholder="Enter a new Key Result"></md-input>
-                                    <md-button class="md-icon-button md-mini">
+                                    <md-input placeholder="Enter a new Key Result" v-model="newkeyresult" v-on:keyup.enter.native="addKeyResult(corevalue['.key'], objkey)"></md-input>
+                                    <md-button class="md-icon-button md-mini" v-on:click="addKeyResult(corevalue['.key'], objkey)">
                                         <md-icon>navigate_next</md-icon>
                                     </md-button>
                                 </md-input-container>
                             </md-list-item>
                         </md-list>
                     </md-list-expand>
-      
-                    <md-button class="md-icon-button md-list-action" v-on:click="deleteObjective(objkey, corevalue['.key'])">
-                        <md-icon class="md-primary">delete</md-icon>
-                    </md-button>
-                    <md-divider></md-divider>
+                    
+                    <md-menu>
+                      <md-button class="md-icon-button" md-menu-trigger>
+                        <md-icon>more_vert</md-icon>
+                      </md-button>
+                    
+                      <md-menu-content>
+                          
+                        <md-menu-item>
+                          <md-icon>pageview</md-icon>
+                          <span>view</span>
+                        </md-menu-item>
+                    
+                        <md-menu-item>
+                          <md-icon>edit</md-icon>
+                          <span>Edit</span>
+                        </md-menu-item>
+                        
+                        <md-menu-item v-on:click="deleteObjective(objkey, corevalue['.key'])">
+                          <md-icon>delete</md-icon>
+                          <span>Delete</span>
+                        </md-menu-item>
+                      </md-menu-content>
+                    </md-menu>
+                    
+                    <!--<md-divider></md-divider>-->
                 </md-list-item>
             </div>
         </md-list>
@@ -103,12 +143,25 @@ export default {
         },
         deleteObjective (key, corevkey) {
             this.$firebaseRefs.corevalues.child(corevkey).child('objectives').child(key).remove();
-        }
+        },
+        addKeyResult (corevkey, objkey) {
+            let keyresult = { name : this.newkeyresult };
+            
+            this.$firebaseRefs.corevalues.child(corevkey)
+                .child('objectives').child(objkey).child('keyresults').push(keyresult);
+            
+            this.newkeyresult = '';
+        },
+        deleteKeyResult (key, corevkey, keyresultkey) {
+            this.$firebaseRefs.corevalues.child(corevkey).child('objectives').child(key)
+                .child('keyresults').child(keyresultkey).remove();
+        },
     },
     data : () => ({
         corevalues : {},
         corevaluekey : '',
-        newobjective : ''
+        newobjective : '',
+        newkeyresult : ''
     }),
     firebase: {
         corevalues : db.ref('corevalues')
