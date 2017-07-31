@@ -32,12 +32,12 @@ export default {
 
 <style>
 
-.fixed {
-  position:sticky;
-  position: -webkit-sticky;
-  top:0;
-  z-index: 100;
-}
+/*.fixed {*/
+/*  position:sticky;*/
+/*  position: -webkit-sticky;*/
+/*  top:0;*/
+/*  z-index: 100;*/
+/*}*/
   
 </style>
 

@@ -27,8 +27,8 @@
                                   <md-menu-content>
                                       
                                     <md-menu-item>
-                                      <md-icon>calendar</md-icon>
-                                      <span>Set Due Date</span>
+                                      <md-icon>date_range</md-icon>
+                                      <span>Due Date</span>
                                     </md-menu-item>
                                     
                                     <md-menu-item>
@@ -201,6 +201,13 @@ export default {
 
 .key-result {
     padding-left:10px;
+}
+
+.md-dialog {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 </style>

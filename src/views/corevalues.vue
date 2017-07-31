@@ -39,7 +39,7 @@
             </md-list-item>
           </md-list>
         
-        <md-dialog md-open-from="#fab-add" md-close-to="#fab-add" ref="addcore-dialog">
+        <md-dialog md-open-from="#fab-add" md-close-to="#fab-add" ref="addcore-dialog" class="add-core-dialog">
             <md-dialog-title>Create new Core Value</md-dialog-title>
             
             <md-dialog-content>
@@ -128,6 +128,13 @@ export default {
 .corevalues {
     margin-bottom:50px;
     padding: 10px;
+}
+
+.md-dialog {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 </style>
