@@ -4,9 +4,10 @@
       <md-button class="md-icon-button" href="/#/">
         <md-icon>home</md-icon>
       </md-button>
+      
       <h2 class="md-title" style="flex: 1">Legados</h2>
     </md-toolbar>
-    
+
     <main class="main-content" id="legadosviews">
       <router-view></router-view>
     </main>
@@ -25,7 +26,7 @@ import LegadosNav from './components/LegadosNav.vue'
 export default {
   name: 'app',
   components: {
-     'legados-nav': LegadosNav,
+     'legados-nav': LegadosNav
   },
 }
 </script>

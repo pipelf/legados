@@ -26,7 +26,8 @@
                                 
                                   <md-menu-content>
                                       
-                                    <md-menu-item>
+                                      <!--onclick open dialog with <datepicker></datepicker>-->
+                                    <md-menu-item  @click="openDialog('set-duedate-dialog')"> 
                                       <md-icon>date_range</md-icon>
                                       <span>Due Date</span>
                                     </md-menu-item>
@@ -114,6 +115,30 @@
             </md-dialog-actions>
         </md-dialog>
         
+         <md-dialog md-open-from="#dateaction" md-close-to="#dateaction" ref="set-duedate-dialog">
+            <md-dialog-title>Set Due Date</md-dialog-title>
+            <md-dialog-content>
+            <form>
+                <!--<md-input-container>-->
+                <!--    <label for="recuring">How often</label>-->
+                <!--    <md-select name="corevlaue" v-model="corevaluekey">-->
+                <!--          <md-option v-for="option in corevalues" v-bind:value="option['.key']">{{ option.title }}</md-option>-->
+                <!--    </md-select>-->
+                <!--</md-input-container>-->
+                <md-input-container>
+                     <label>Due Date</label>
+                     <md-input></md-input>
+                     <!--<datepicker v-model="date"></datepicker>-->
+                </md-input-container>
+            </form>
+            </md-dialog-content>
+            
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="closeDialog('set-duedate-dialog')">Cancel</md-button>
+                <md-button class="md-primary" @click="saveDueDate('set-duedate-dialog')">Save</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+        
         <md-bottom-bar id="add">
             <md-button id="fab-add" class="md-fab md-fab-bottom-right addobj" @click="openDialog('addobjective-dialog')">
                 <md-icon>add</md-icon>
@@ -126,8 +151,12 @@
 
 import firebase from 'firebase'
 var db = firebase.app().database();
+// import DatePicker from 'vue-date'
 
 export default {
+    components: {
+    //  'datepicker': DatePicker
+    },
     methods: {
         openDialog(ref) {
             this.$refs[ref].open();
@@ -167,7 +196,8 @@ export default {
         corevalues : {},
         corevaluekey : '',
         newobjective : '',
-        newkeyresult : ''
+        newkeyresult : '',
+        date: ''
     }),
     firebase: {
         corevalues : db.ref('corevalues')
@@ -209,5 +239,4 @@ export default {
     width: 100% !important;
     height: 100% !important;
 }
-
 </style>
