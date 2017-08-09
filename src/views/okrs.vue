@@ -13,7 +13,7 @@
                     <span></span>
                     <md-list-expand>
                          <md-list>
-                            <md-list-item class="key-result" v-for="(keyresult, keyresultkey) in objective.keyresults">
+                            <md-list-item class="key-result" v-for="(keyresult, keyresultkey) in objective.keyresults" ref="keyresultkey">
                                 <div class="md-list-text-container">
                                     <span>{{keyresult.name}}</span>
                                     <span class="md-caption">{{keyresult.duedate}}</span>
@@ -27,14 +27,14 @@
                                   <md-menu-content>
                                       
                                       <!--onclick open dialog with <datepicker></datepicker>-->
-                                    <md-menu-item  @click="openDialog('set-duedate-dialog')"> 
+                                    <md-menu-item  @click="openDialog('set-duedate-dialog', keyresultkey)"> 
                                       <md-icon>date_range</md-icon>
-                                      <span>Due Date</span>
+                                      <span>When</span>
                                     </md-menu-item>
                                     
                                     <md-menu-item>
                                       <md-icon>pageview</md-icon>
-                                      <span>view</span>
+                                      <span>View</span>
                                     </md-menu-item>
                                 
                                     <md-menu-item>
@@ -116,21 +116,17 @@
         </md-dialog>
         
          <md-dialog md-open-from="#dateaction" md-close-to="#dateaction" ref="set-duedate-dialog">
-            <md-dialog-title>Set Due Date</md-dialog-title>
+            <md-dialog-title>Due</md-dialog-title>
             <md-dialog-content>
-            <form>
-                <!--<md-input-container>-->
-                <!--    <label for="recuring">How often</label>-->
-                <!--    <md-select name="corevlaue" v-model="corevaluekey">-->
-                <!--          <md-option v-for="option in corevalues" v-bind:value="option['.key']">{{ option.title }}</md-option>-->
-                <!--    </md-select>-->
-                <!--</md-input-container>-->
-                <md-input-container>
-                     <label>Due Date</label>
-                     <md-input></md-input>
-                     <!--<datepicker v-model="date"></datepicker>-->
-                </md-input-container>
-            </form>
+                    <md-button-toggle md-single class="stack">
+                        
+                        <md-button class="stack" @click="setDueDate('everyday')">Every Day</md-button>
+                        <md-button class="stack" @click="setDueDate('1w')">In 1 week</md-button>
+                        <md-button class="stack" @click="setDueDate('2w')">In 2 weeks</md-button>
+                        <md-button class="stack" @click="setDueDate('1m')">In 1 Month</md-button>
+                        <md-button class="stack" @click="setDueDate('6m')">In 6 Months</md-button>
+
+                    </md-button-toggle>
             </md-dialog-content>
             
             <md-dialog-actions>
@@ -158,7 +154,13 @@ export default {
     //  'datepicker': DatePicker
     },
     methods: {
-        openDialog(ref) {
+        setDueDate(due) {
+            //alert(this.keyresultonUpdate);
+            this.$refs['set-duedate-dialog'].close();
+            this.keyresultonUpdate = '';
+        },
+        openDialog(ref, key) {
+            this.keyresultonUpdate = key;
             this.$refs[ref].open();
         },
         closeDialog(ref) {
@@ -197,7 +199,8 @@ export default {
         corevaluekey : '',
         newobjective : '',
         newkeyresult : '',
-        date: ''
+        date: '',
+        keyresultonUpdate: ''
     }),
     firebase: {
         corevalues : db.ref('corevalues')
@@ -239,4 +242,9 @@ export default {
     width: 100% !important;
     height: 100% !important;
 }
+
+.stack {
+    display:block;
+}
+
 </style>

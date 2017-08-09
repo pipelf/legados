@@ -4,6 +4,7 @@ import VueFire from 'vuefire'
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+//move to https://vuetifyjs.com
 
 Vue.use(VueRouter)
 Vue.use(VueFire)
